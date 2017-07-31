@@ -15,7 +15,7 @@ pipeline{
         booleanParam(name: 'runPySparklingIntegTests', defaultValue: false, description: 'Run pySparkling integration tests')
 
         choice(
-            choices: '2.1.0\n2.0.2\n2.0.1\n2.0.0\n1.6.3\n1.6.2\n1.6.1\n1.6.0\n1.5.2\n1.4.2',
+            choices: '2.2.0\n2.1.0\n2.0.2\n2.0.1\n2.0.0\n1.6.3\n1.6.2\n1.6.1\n1.6.0\n1.5.2\n1.4.2',
             description: 'Version of Spark used for testing.',
             name: 'sparkVersion')
 
@@ -26,13 +26,15 @@ pipeline{
     }
 
     environment {
-        HADOOP_VERSION  = "2.6" 
+        HADOOP_VERSION  = "2.7"
         SPARK           = "spark-${params.sparkVersion}-bin-hadoop${HADOOP_VERSION}"
         SPARK_HOME      = "${env.WORKSPACE}/spark"
         HADOOP_CONF_DIR = "/etc/hadoop/conf"
         MASTER          = "yarn-client"
         H2O_PYTHON_WHEEL="${env.WORKSPACE}/private/h2o.whl"
         H2O_EXTENDED_JAR="${env.WORKSPACE}/assembly-h2o/private/"
+        JAVA_HOME       ="/usr/lib/jvm/java-8-oracle"
+        PATH            ="$JAVA_HOME/bin:$PATH"
     }
 
     stages {
